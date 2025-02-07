@@ -17,20 +17,50 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
   int vegetableSpoon = 0;
   int vegetableLadel = 0;
   double vegetableTotal = 0.0;
-  String status = 'GOOD';
+  String status = 'No data';
+  double get total => meatTotal + riceTotal + vegetableTotal;
 
   int fruitPiece = 0;
   int fruit = 0;
   double fruitTotal = 0.0;
-  double progressFruitValue = 0.5;
+  double get progressFruitValue => fruitTotal / 350;
 
   int milkGrass = 0;
   int milkCarton = 0;
   double milkTotal = 0.0;
-  double progressMilkValue = 0.5;
+  double get progressMilkValue => milkTotal / 1000;
+
+  late Color progressFruitColor;
+  late Color progressMilkColor;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+  if(total == 0) {
+    status = 'No data';
+  }else if(
+    0.20 < (meatTotal / total) && (meatTotal / total) < 0.3 &&
+    0.20 < (riceTotal / total) && (riceTotal / total) < 0.3 &&
+    0.45 < (vegetableTotal / total) && (vegetableTotal / total) < 0.55) {
+    status = 'GOOD';
+  } else{
+    status = 'BAD';
+  }
+  
+  if(progressFruitValue >= 0.85 && 1.0 >= progressFruitValue) {
+    progressFruitColor = const Color.fromARGB(255, 7, 135, 7);
+  } else if(progressFruitValue > 1) {
+    progressFruitColor = Colors.red;
+  } else {
+    progressFruitColor = const Color(0xFF4F513C);
+  }
+
+  if(1.0 >= progressMilkValue && progressMilkValue >= 0.5) {
+    progressMilkColor = const Color.fromARGB(255, 7, 135, 7);
+  } else if (progressMilkValue > 1) {
+    progressMilkColor = Colors.red;
+  } else {
+    progressMilkColor = const Color(0xFF4F513C);
+  }
     return Scaffold(
       backgroundColor: const Color(0xFFF2E5D2),
       appBar: AppBar(
@@ -82,28 +112,28 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                           setState(() {
                             if (meatSpoon > 0) {
                             meatSpoon--;
-                            meatTotal = (meatTotal - 5 >= 0) ? meatTotal - 5 : 0;  // Ensure meatTotal is not negative
+                            meatTotal = (meatTotal - 15 >= 0) ? meatTotal - 15 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             meatSpoon++;
-                            meatTotal += 5;
+                            meatTotal += 15;
                           });
-                        },  // Plus Spoon
+                        },
                         () {
                           setState(() {
                             if (meatLadel > 0) {
                             meatLadel--;
-                            meatTotal = (meatTotal - 10 >= 0) ? meatTotal - 10 : 0;  // Ensure meatTotal is not negative
+                            meatTotal = (meatTotal - 60 >= 0) ? meatTotal - 60 : 0;  
                           }
                           });
                         },   // Minus Spoon
                         () {
                           setState(() {
                             meatLadel++;
-                            meatTotal += 10;
+                            meatTotal += 60;
                           });
                         },
                         ),
@@ -116,28 +146,28 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                           setState(() {
                             if (riceSpoon > 0) {
                             riceSpoon--;
-                            riceTotal = (riceTotal - 5 >= 0) ? riceTotal - 5 : 0;
+                            riceTotal = (riceTotal - 15 >= 0) ? riceTotal - 15 : 0;
                           }
                           });
                         },   // Minus Spoon
                         () {
                           setState(() {
                             riceSpoon++;
-                            riceTotal += 5;
+                            riceTotal += 15;
                           });
                         },  // Plus Spoon
                         () {
                           setState(() {
                             if (riceLadel > 0) {
                             riceLadel--;
-                            riceTotal = (riceTotal - 10 >= 0) ? riceTotal - 10 : 0;
+                            riceTotal = (riceTotal - 60 >= 0) ? riceTotal - 60 : 0;
                           }
                           });
                         },   // Minus Spoon
                         () {
                           setState(() {
                             riceLadel++;
-                            riceTotal += 10;
+                            riceTotal += 60;
                           });
                         },
                         ),
@@ -150,28 +180,28 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                           setState(() {
                             if (vegetableSpoon > 0) {
                             vegetableSpoon--;
-                            vegetableTotal = (vegetableTotal - 5 >= 0) ? vegetableTotal - 5 : 0;  // Ensure vegetableTotal is not negative
+                            vegetableTotal = (vegetableTotal - 15 >= 0) ? vegetableTotal - 15 : 0;
                           }
                           });
                         },   // Minus Spoon
                         () {
                           setState(() {
                             vegetableSpoon++;
-                            vegetableTotal += 5;
+                            vegetableTotal += 15;
                           });
-                        },  // Plus Spoon
+                        },
                         () {
                           setState(() {
                             if (vegetableLadel > 0) {
                             vegetableLadel--;
-                            vegetableTotal = (vegetableTotal - 10 >= 0) ? vegetableTotal - 10 : 0;
+                            vegetableTotal = (vegetableTotal - 60 >= 0) ? vegetableTotal - 60 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             vegetableLadel++;
-                            vegetableTotal += 10;
+                            vegetableTotal += 60;
                           });
                         },
                         ),
@@ -181,10 +211,10 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         status,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF36AE7C)),
+                            color: status == 'GOOD' ? const Color(0xFF36AE7C): Colors.red) ,
                       ),
                     )
                   ],
@@ -207,8 +237,8 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                             isHeader: true,
                             img: [
                               null,
+                              'assets/OnePieceOfApple.jpg',
                               'assets/Apple.png',
-                              'assets/OnePieceOfApple.jpg'
                             ]),
                         buildRowWithImages([
                           '${fruitTotal.toString()} g.\nผลไม้',
@@ -219,28 +249,28 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                           setState(() {
                             if (fruitPiece > 0) {
                             fruitPiece--;
-                            fruitTotal = (fruitTotal - 5 >= 0) ? fruitTotal - 5 : 0;
+                            fruitTotal = (fruitTotal - 90>= 0) ? fruitTotal - 90 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             fruitPiece++;
-                            fruitTotal += 5;
+                            fruitTotal += 90;
                           });
                         },
                         () {
                           setState(() {
                             if (fruit > 0) {
                             fruit--;
-                            fruitTotal = (fruitTotal - 10 >= 0) ? fruitTotal - 10 : 0;
+                            fruitTotal = (fruitTotal - 300 >= 0) ? fruitTotal - 300 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             fruit++;
-                            fruitTotal += 10;
+                            fruitTotal += 300;
                           });
                         },
                     )],
@@ -248,7 +278,7 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                     const SizedBox(
                       height: 10,
                     ),
-                    buildProgressBar(progressFruitValue),
+                    buildProgressBar(progressFruitValue, progressFruitColor),
                     const SizedBox(
                       height: 20,
                     ),
@@ -270,12 +300,12 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                         2: FlexColumnWidth(),
                       },
                       children: [
-                        buildRow(['', 'กล่อง', 'แก้ว'],
+                        buildRow(['', 'แก้ว', 'กล่อง'],
                             isHeader: true,
                             img: [
                               null,
-                              'assets/Milk.png',
                               'assets/glass_of_milk.png',
+                              'assets/Milk.png',
                             ]),
                         buildRowWithImages([
                           '${milkTotal.toString()} g.\nนม',
@@ -286,28 +316,28 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                           setState(() {
                             if (milkGrass > 0) {
                             milkGrass--;
-                            milkTotal = (milkTotal - 5 >= 0) ? milkTotal - 5 : 0;  // Ensure meatTotal is not negative
+                            milkTotal = (milkTotal - 200 >= 0) ? milkTotal - 200 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             milkGrass++;
-                            milkTotal += 5;
+                            milkTotal += 200;
                           });
-                        },  // Plus Spoon
+                        },
                         () {
                           setState(() {
                             if (milkCarton > 0) {
                             milkCarton--;
-                            milkTotal = (milkTotal - 10 >= 0) ? milkTotal - 10 : 0;
+                            milkTotal = (milkTotal - 250 >= 0) ? milkTotal - 250 : 0;
                           }
                           });
-                        },   // Minus Spoon
+                        },
                         () {
                           setState(() {
                             milkCarton++;
-                            milkTotal += 10;
+                            milkTotal += 250;
                           });
                         },
                     )],
@@ -315,7 +345,7 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                     const SizedBox(
                       height: 10,
                     ),
-                    buildProgressBar(progressMilkValue),
+                    buildProgressBar(progressMilkValue, progressMilkColor),
                     const SizedBox(
                       height: 20,
                     ),
@@ -354,7 +384,7 @@ TableRow buildRow(List<String> cells,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      img[index]!, // Load different images for each cell
+                      img[index]!,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -432,7 +462,7 @@ Widget buildImageButtonCell(
   );
 }
 
-Widget buildProgressBar(double progressValue) {
+Widget buildProgressBar(double progressValue, Color decorate) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: ClipRRect(
@@ -441,7 +471,7 @@ Widget buildProgressBar(double progressValue) {
         value: progressValue,
         minHeight: 24,
         backgroundColor: Colors.grey[300],
-        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4F513C)),
+        valueColor: AlwaysStoppedAnimation<Color>(decorate),
       ),
     ),
   );
