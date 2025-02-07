@@ -8,24 +8,33 @@ class Page3Healthdiet extends StatefulWidget {
 }
 
 class _Page3HealthdietState extends State<Page3Healthdiet> {
-  double progressValue = 0.0;
+  int meatSpoon = 0;
+  int meatLadel = 0;
+  double meatTotal = 0.0;
+  int riceSpoon = 0;
+  int riceLadel = 0;
+  double riceTotal = 0.0;
+  int vegetableSpoon = 0;
+  int vegetableLadel = 0;
+  double vegetableTotal = 0.0;
   String status = 'GOOD';
 
-  void updateProgress() {
-    setState(() {
-      progressValue += 0.1;
-      if (progressValue > 1.0) {
-        progressValue = 0.0;
-      }
-    });
-  }
+  int fruitPiece = 0;
+  int fruit = 0;
+  double fruitTotal = 0.0;
+  double progressFruitValue = 0.5;
+
+  int milkGrass = 0;
+  int milkCarton = 0;
+  double milkTotal = 0.0;
+  double progressMilkValue = 0.5;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2E5D2),
       appBar: AppBar(
-        title: const Text("Diet",
+        title: const Text("Health Diet",
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -64,19 +73,119 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                             'assets/WoodLadel.png'
                           ],
                         ),
-                        buildRowWithImages(['0.0 g.\nเนื้อสัตว์', '10', '10']),
-                        buildRowWithImages(['0.0 g.\nข้าว', '50', '0']),
-                        buildRowWithImages(['0.0 g.\nผัก', '100', '30']),
+                        buildRowWithImages([
+                          '${meatTotal.toString()} g.\nเนื้อสัตว์',
+                          meatSpoon.toString(),
+                          meatLadel.toString()
+                        ],
+                        () {
+                          setState(() {
+                            if (meatSpoon > 0) {
+                            meatSpoon--;
+                            meatTotal = (meatTotal - 5 >= 0) ? meatTotal - 5 : 0;  // Ensure meatTotal is not negative
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            meatSpoon++;
+                            meatTotal += 5;
+                          });
+                        },  // Plus Spoon
+                        () {
+                          setState(() {
+                            if (meatLadel > 0) {
+                            meatLadel--;
+                            meatTotal = (meatTotal - 10 >= 0) ? meatTotal - 10 : 0;  // Ensure meatTotal is not negative
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            meatLadel++;
+                            meatTotal += 10;
+                          });
+                        },
+                        ),
+                        buildRowWithImages([
+                          '${riceTotal.toString()} g.\nข้าว',
+                          riceSpoon.toString(),
+                          riceLadel.toString()
+                        ],
+                        () {
+                          setState(() {
+                            if (riceSpoon > 0) {
+                            riceSpoon--;
+                            riceTotal = (riceTotal - 5 >= 0) ? riceTotal - 5 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            riceSpoon++;
+                            riceTotal += 5;
+                          });
+                        },  // Plus Spoon
+                        () {
+                          setState(() {
+                            if (riceLadel > 0) {
+                            riceLadel--;
+                            riceTotal = (riceTotal - 10 >= 0) ? riceTotal - 10 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            riceLadel++;
+                            riceTotal += 10;
+                          });
+                        },
+                        ),
+                        buildRowWithImages([
+                          '${vegetableTotal.toString()} g.\nผัก',
+                          vegetableSpoon.toString(),
+                          vegetableLadel.toString()
+                        ],
+                        () {
+                          setState(() {
+                            if (vegetableSpoon > 0) {
+                            vegetableSpoon--;
+                            vegetableTotal = (vegetableTotal - 5 >= 0) ? vegetableTotal - 5 : 0;  // Ensure vegetableTotal is not negative
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            vegetableSpoon++;
+                            vegetableTotal += 5;
+                          });
+                        },  // Plus Spoon
+                        () {
+                          setState(() {
+                            if (vegetableLadel > 0) {
+                            vegetableLadel--;
+                            vegetableTotal = (vegetableTotal - 10 >= 0) ? vegetableTotal - 10 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            vegetableLadel++;
+                            vegetableTotal += 10;
+                          });
+                        },
+                        ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(status,
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF36AE7C)
-                      ),),
+                      child: Text(
+                        status,
+                        style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF36AE7C)),
+                      ),
                     )
                   ],
                 ),
@@ -101,12 +210,48 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                               'assets/Apple.png',
                               'assets/OnePieceOfApple.jpg'
                             ]),
-                        buildRowWithImages(['0.0 g.\nผลไม้', '0', '0']),
-                      ],
+                        buildRowWithImages([
+                          '${fruitTotal.toString()} g.\nผลไม้',
+                          fruitPiece.toString(),
+                          fruit.toString()
+                        ],
+                        () {
+                          setState(() {
+                            if (fruitPiece > 0) {
+                            fruitPiece--;
+                            fruitTotal = (fruitTotal - 5 >= 0) ? fruitTotal - 5 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            fruitPiece++;
+                            fruitTotal += 5;
+                          });
+                        },
+                        () {
+                          setState(() {
+                            if (fruit > 0) {
+                            fruit--;
+                            fruitTotal = (fruitTotal - 10 >= 0) ? fruitTotal - 10 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            fruit++;
+                            fruitTotal += 10;
+                          });
+                        },
+                    )],
                     ),
-                    const SizedBox(height: 10,),
-                    buildProgressBar(progressValue),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildProgressBar(progressFruitValue),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -132,36 +277,54 @@ class _Page3HealthdietState extends State<Page3Healthdiet> {
                               'assets/Milk.png',
                               'assets/glass_of_milk.png',
                             ]),
-                        buildRowWithImages(['0.0 g.\nนม', '10', '10']),
-                      ],
+                        buildRowWithImages([
+                          '${milkTotal.toString()} g.\nนม',
+                          milkGrass.toString(),
+                          milkCarton.toString()
+                        ],
+                        () {
+                          setState(() {
+                            if (milkGrass > 0) {
+                            milkGrass--;
+                            milkTotal = (milkTotal - 5 >= 0) ? milkTotal - 5 : 0;  // Ensure meatTotal is not negative
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            milkGrass++;
+                            milkTotal += 5;
+                          });
+                        },  // Plus Spoon
+                        () {
+                          setState(() {
+                            if (milkCarton > 0) {
+                            milkCarton--;
+                            milkTotal = (milkTotal - 10 >= 0) ? milkTotal - 10 : 0;
+                          }
+                          });
+                        },   // Minus Spoon
+                        () {
+                          setState(() {
+                            milkCarton++;
+                            milkTotal += 10;
+                          });
+                        },
+                    )],
                     ),
-                    const SizedBox(height: 10,),
-                    buildProgressBar(progressValue),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildProgressBar(progressMilkValue),
+                    const SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildDietTable(
-      List<String> headers, String img1, String img2, String data) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFF6EBD9),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [BoxShadow(blurRadius: 10)],
-      ),
-      child: Table(
-        columnWidths: const {0: FlexColumnWidth()},
-        children: [
-          buildRow(headers, isHeader: true, img: [null, img1, img2]),
-          buildRowWithImages([data, '0', '0']),
-        ],
       ),
     );
   }
@@ -213,12 +376,15 @@ TableRow buildRow(List<String> cells,
   );
 }
 
-TableRow buildRowWithImages(List<String> cells) {
+TableRow buildRowWithImages(
+    List<String> cells, 
+  VoidCallback onMinusSpoon, VoidCallback onPlusSpoon, 
+  VoidCallback onMinusLadle, VoidCallback onPlusLadle) {
   return TableRow(
     children: [
       buildTextCell(cells[0]),
-      buildImageButtonCell(cells[1]),
-      buildImageButtonCell(cells[2]),
+      buildImageButtonCell(cells[1], onMinusSpoon, onPlusSpoon),
+      buildImageButtonCell(cells[2], onMinusLadle, onPlusLadle),
     ],
   );
 }
@@ -235,7 +401,8 @@ Widget buildTextCell(String text) {
   );
 }
 
-Widget buildImageButtonCell(String text) {
+Widget buildImageButtonCell(
+    String text, VoidCallback onMinusPressed, VoidCallback onPlusPressed) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Column(
@@ -248,18 +415,14 @@ Widget buildImageButtonCell(String text) {
               child: IconButton(
                 icon: Image.asset('assets/minus_button.png'),
                 iconSize: 10,
-                onPressed: () {
-                  print("Button pressed!");
-                },
+                onPressed: onMinusPressed,
               ),
             ),
             Flexible(
               child: IconButton(
                 icon: Image.asset('assets/plus_button.png'),
                 iconSize: 40,
-                onPressed: () {
-                  print("Button pressed!");
-                },
+                onPressed: onPlusPressed,
               ),
             ),
           ],
@@ -270,16 +433,16 @@ Widget buildImageButtonCell(String text) {
 }
 
 Widget buildProgressBar(double progressValue) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: LinearProgressIndicator(
-          value: progressValue,
-          minHeight: 24,
-          backgroundColor: Colors.grey[300],
-          valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4F513C)),
-        ),
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: LinearProgressIndicator(
+        value: progressValue,
+        minHeight: 24,
+        backgroundColor: Colors.grey[300],
+        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4F513C)),
       ),
-    );
-  }
+    ),
+  );
+}
