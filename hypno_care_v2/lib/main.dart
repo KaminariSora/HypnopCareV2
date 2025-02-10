@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'page3_healthdiet.dart';
+import 'page2_bmi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Page3Healthdiet(),
+      home: Page2Bmi(),
     );
   }
 }
