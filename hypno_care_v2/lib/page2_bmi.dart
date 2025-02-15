@@ -9,14 +9,134 @@ class Page2Bmi extends StatefulWidget {
 
 class _Page2BmiState extends State<Page2Bmi> {
   String status = 'Normal';
+  Color statusColor = const Color(0xFF36AE7C);
   double bmi = 0.0;
   String? selectedGender;
+  String emotion = 'assets/happy_face.jpg';
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+
+  void _getValue() {
+    String weight = _weightController.text;
+    String height = _heightController.text;
+    String age = _ageController.text;
+
+    if (weight.isEmpty ||
+        height.isEmpty ||
+        age.isEmpty ||
+        selectedGender == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all the fields!')),
+      );
+      return;
+    }
+
+    double weightValue = double.tryParse(weight) ?? 0.0;
+    double heightValue = double.tryParse(height) ?? 0.0;
+    double heightvalueMeter = heightValue / 100;
+    int ageValue = int.tryParse(age) ?? 20;
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        bmi = weightValue / (heightvalueMeter * heightvalueMeter);
+        if (ageValue < 20) {
+          if (selectedGender == 'Male') {
+            if (bmi < 17) {
+              emotion = 'assets/purple_face.jpg';
+              status = 'Underweight';
+              statusColor = Colors.purple;
+            } else if (bmi >= 17 && bmi < 22) {
+              emotion = 'assets/happy_face.jpg';
+              status = 'Normal';
+              statusColor = const Color(0xFF36AE7C);
+            } else if (bmi >= 22 && bmi < 25) {
+              emotion = 'assets/blue_face.jpg';
+              status = 'Overweight';
+              statusColor = Colors.blueAccent;
+            } else if (bmi >= 25){
+              emotion = 'assets/angry_face.jpg';
+              status = 'Obese';
+              statusColor = Colors.red;
+            } else {
+              emotion = 'assets/yellow_face.jpg';
+              status = '';
+              statusColor = Colors.black;
+            }
+          } else if (selectedGender == 'Female') {
+            if (bmi < 16.5) {
+              emotion = 'assets/purple_face.jpg';
+              status = 'Underweight';
+              statusColor = Colors.purple;
+            } else if (bmi >= 16.5 && bmi < 21.5) {
+              emotion = 'assets/happy_face.jpg';
+              status = 'Normal';
+              statusColor = const Color(0xFF36AE7C);
+            } else if (bmi >= 21.5 && bmi < 24.5) {
+              emotion = 'assets/blue_face.jpg';
+              status = 'Overweight';
+              statusColor = Colors.blueAccent;
+            } else if (bmi >= 24.5){
+              emotion = 'assets/angry_face.jpg';
+              status = 'Obese';
+              statusColor = Colors.red;
+            } else {
+              emotion = 'assets/yellow_face.jpg';
+              status = '';
+              statusColor = Colors.black;
+            }
+          }
+        } else {
+          if (bmi < 18.5) {
+            // ผอม
+            emotion = 'assets/purple_face.jpg';
+            status = 'Underweight';
+            statusColor = Colors.purple;
+          } else if (bmi >= 18.5 && bmi < 22.9) {
+            // ปกติ
+            emotion = 'assets/happy_face.jpg';
+            status = 'Normal';
+            statusColor = const Color(0xFF36AE7C);
+          } else if (bmi >= 23 && bmi < 24.9) {
+            // ท้วม 1
+            emotion = 'assets/blue_face.jpg';
+            status = 'Obesity grade 1';
+            statusColor = Colors.blueAccent;
+          } else if (bmi >= 25 && bmi < 29.9) {
+            // ท้วม 2
+            emotion = 'assets/yellow_face.jpg';
+            status = 'Obesity grade 2';
+            statusColor = Colors.yellow;
+          } else if (bmi >= 29.9){
+            // ท้วม 3
+            emotion = 'assets/angry_face.jpg';
+            status = 'Obesity grade 3';
+            statusColor = Colors.red;
+          } else {
+              emotion = 'assets/yellow_face.jpg';
+              status = 'Number only!';
+              statusColor = Colors.black;
+              bmi = 0.0;
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _weightController.dispose();
+    _heightController.dispose();
+    _ageController.dispose();
+    super.dispose();
+  }
 
   void selectGender(String gender) {
     setState(() {
       selectedGender = gender;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +162,18 @@ class _Page2BmiState extends State<Page2Bmi> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GenderButton(
-                    gender: 'MALE',
+                    gender: 'Male',
                     imagePath: 'assets/male_icon.png',
-                    isSelected: selectedGender == 'MALE',
+                    isSelected: selectedGender == 'Male',
                     onSelect: selectGender,
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   GenderButton(
-                    gender: 'FEMALE',
+                    gender: 'Female',
                     imagePath: 'assets/female_icon.png',
-                    isSelected: selectedGender == 'FEMALE',
+                    isSelected: selectedGender == 'Female',
                     onSelect: selectGender,
                   ),
                 ],
@@ -72,7 +192,43 @@ class _Page2BmiState extends State<Page2Bmi> {
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: const [BoxShadow(blurRadius: 5)],
                     ),
-                    child: Image.asset('assets/plus_button.png'),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InputBox(
+                          input: SizedBox(
+                            width: 200,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              controller: _heightController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter height (cm)',
+                                hintStyle: const TextStyle(color: Colors.grey),
+                                filled: true,
+                                fillColor: const Color(0xFFF6EBD9),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide:
+                                      BorderSide.none, // Remove default border
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFF5E7F60), width: 2),
+                                ),
+                                enabledBorder: const UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey, width: 5),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 12),
+                              ),
+                            ),
+                          ),
+                          label: 'Height (cm)',
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -83,28 +239,126 @@ class _Page2BmiState extends State<Page2Bmi> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 180,
-                    height: 166,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [BoxShadow(blurRadius: 5)],
-                    ),
-                    child: Image.asset('assets/plus_button.png'),
-                  ),
+                      width: 180,
+                      height: 166,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6EBD9),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [BoxShadow(blurRadius: 5)],
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SizedBox(
+                            height: constraints.maxHeight,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: InputBox(
+                                      input: SizedBox(
+                                        width: 150,
+                                        child: TextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: _weightController,
+                                          decoration: InputDecoration(
+                                            hintText: 'Enter weight',
+                                            hintStyle: const TextStyle(
+                                                color: Colors.grey),
+                                            filled: true,
+                                            fillColor: const Color(0xFFF6EBD9),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              borderSide: BorderSide
+                                                  .none, // Remove default border
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              borderSide: const BorderSide(
+                                                  color: Color(0xFF5E7F60),
+                                                  width: 2),
+                                            ),
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey, width: 5),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 12),
+                                          ),
+                                        ),
+                                      ),
+                                      label: 'Weight'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      )),
                   const SizedBox(
                     width: 10,
                   ),
                   Container(
-                    width: 180,
-                    height: 166,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [BoxShadow(blurRadius: 5)],
-                    ),
-                    child: Image.asset('assets/plus_button.png'),
-                  ),
+                      width: 180,
+                      height: 166,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6EBD9),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [BoxShadow(blurRadius: 5)],
+                      ),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SizedBox(
+                            height: constraints.maxHeight,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: InputBox(
+                                      input: SizedBox(
+                                        width: 150,
+                                        child: TextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: _ageController,
+                                          decoration: InputDecoration(
+                                            hintText: 'Enter age',
+                                            hintStyle: const TextStyle(
+                                                color: Colors.grey),
+                                            filled: true,
+                                            fillColor: const Color(0xFFF6EBD9),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              borderSide: BorderSide
+                                                  .none, // Remove default border
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              borderSide: const BorderSide(
+                                                  color: Color(0xFF5E7F60),
+                                                  width: 2),
+                                            ),
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey, width: 5),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 12),
+                                          ),
+                                        ),
+                                      ),
+                                      label: 'Age'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      )),
                 ],
               ),
               const SizedBox(
@@ -119,7 +373,7 @@ class _Page2BmiState extends State<Page2Bmi> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF5E7F60)),
-                        onPressed: () {},
+                        onPressed: _getValue,
                         child: const Text(
                           'Calculate',
                           style: TextStyle(
@@ -142,7 +396,7 @@ class _Page2BmiState extends State<Page2Bmi> {
                     SizedBox(
                       height: 115,
                       child: Image.asset(
-                        'assets/happy_face.png',
+                        emotion,
                       ),
                     ),
                     const SizedBox(
@@ -152,13 +406,13 @@ class _Page2BmiState extends State<Page2Bmi> {
                       children: [
                         Text(
                           status,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 24,
-                              color: Color(0xFF36AE7C),
+                              color: statusColor,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          bmi.toString(),
+                          bmi.toStringAsFixed(2),
                           style: const TextStyle(
                             fontSize: 64,
                             color: Color(0xFF4F513C),
@@ -224,6 +478,28 @@ class GenderButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class InputBox extends StatelessWidget {
+  final Widget input;
+  final String label;
+
+  const InputBox({super.key, required this.input, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontSize: 20),
+        ),
+        const SizedBox(height: 8),
+        input, // Pass any input widget here
+      ],
     );
   }
 }
