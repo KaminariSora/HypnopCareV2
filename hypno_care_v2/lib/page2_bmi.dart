@@ -140,6 +140,7 @@ class _Page2BmiState extends State<Page2Bmi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF2E5D2),
       appBar: AppBar(
         title: const Text("BMI Calculate",
             style: TextStyle(
