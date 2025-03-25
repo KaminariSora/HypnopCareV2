@@ -1,5 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hypno_care_v2/const.dart';
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -11,6 +15,11 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, dynamic>> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _sendMessage() async {
     if (_controller.text.trim().isEmpty) return;
@@ -37,16 +46,40 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  static String _getBotReply(String message) {
-    return "Hello! How can I help?"; // Simulated bot response
+  static Future<String> _getBotReply(String message) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$apiUrl?key=$geminiAPI'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "contents": [
+            {
+              "role": "user",
+              "parts": [
+                {"text": message}
+              ]
+            }
+          ]
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data["candidates"]?[0]["content"]["parts"][0]["text"] ?? "No response.";
+      } else {
+        return "Error: ${response.statusCode} - ${response.body}";
+      }
+  } catch (e) {
+    return "Error: $e";
   }
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2E5D2),
       appBar: AppBar(
-        title: const Text("Chat",
+        title: const Text("HypnoCare Chat",
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -73,7 +106,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           _buildInputField(),
-          // SizedBox(height: 300,)
         ],
       ),
     );
@@ -81,7 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildInputField() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.1,
       color: const Color(0xFFBFBB95),
       child: Column(
         children: [
@@ -111,13 +143,6 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-          // Text('data'),
-          IconButton(
-              icon: Image.asset('assets/microphone_button.png'),
-              iconSize: 20,
-              onPressed: () {}
-          ),
-          const Text('tap to speak!')
         ],
       ),
     );
