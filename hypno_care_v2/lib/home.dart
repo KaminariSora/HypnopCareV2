@@ -19,104 +19,105 @@ class _HomeState extends State<Home> {
         splitScreenMode: true,
         builder: (context, child) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: const Color(0xFF5E7F60),
-              centerTitle: true,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(120.h), // กำหนดความสูงของ AppBar
+              child: AppBar(
+                backgroundColor: const Color(0xFF5E7F60),
+                centerTitle: true,
+                title: Text(
+                  'TODAY',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                flexibleSpace: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                  decoration: BoxDecoration(color: Color(0xFF5E7F60)),
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.end, // จัดให้แสดงด้านล่าง
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(7, (index) {
+                          DateTime date = today.add(Duration(days: index - 3));
+
+                          return Column(
+                            children: [
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  // กล่องสี่เหลี่ยมรอบชื่อวัน
+                                  Container(
+                                    width: 45.w,
+                                    height: 65.h,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 4.h, horizontal: 8.w),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: date.day == today.day
+                                            ? Colors.white
+                                            : Colors.transparent,
+                                        width: 2.w,
+                                      ),
+                                      borderRadius: BorderRadius.circular(45.r),
+                                    ),
+                                    child: Text(
+                                      DateFormat.E().format(date),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[300],
+                                      ),
+                                    ),
+                                  ),
+                                  // วงกลมรอบวันที่
+                                  Positioned(
+                                    top: 30.h,
+                                    child: Container(
+                                      width: 30.w,
+                                      height: 30.h,
+                                      decoration: BoxDecoration(
+                                        color: date.day == today.day
+                                            ? Colors.green[400]
+                                            : Colors.transparent,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "${date.day}",
+                                        style: TextStyle(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-                    decoration: BoxDecoration(color: Color(0xFF5E7F60)),
-                    height: 120.h,
-                    child: Column(
-                      children: [
-                        // เพิ่มข้อความก่อน Row
-                        Text(
-                          'TODAY',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(7, (index) {
-                            DateTime date =
-                                today.add(Duration(days: index - 3));
-
-                            return Column(
-                              children: [
-                                // วางทั้งสี่เหลี่ยมและวงกลมใน Stack
-                                Stack(
-                                  alignment:
-                                      Alignment.center, // ตั้งให้อยู่กลาง
-                                  children: [
-                                    // กล่องสี่เหลี่ยมรอบชื่อวัน
-                                    Container(
-                                      width: 45.w,
-                                      height: 65.h,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 4.h, horizontal: 8.w),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: date.day == today.day
-                                              ? Colors.grey[
-                                                  300]! // ขอบสีเขียวถ้าเป็นวันปัจจุบัน
-                                              : Colors
-                                                  .transparent!, // ขอบสีเทาถ้าไม่ใช่วันปัจจุบัน
-                                          width: 2.w,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(45.r),
-                                      ),
-                                      child: Text(
-                                        DateFormat.E().format(
-                                            date), // ชื่อวัน (MON, TUE, ...)
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey[300],
-                                        ),
-                                      ),
-                                    ),
-                                    // วงกลมรอบวันที่
-                                    Positioned(
-                                      top: 30
-                                          .h, // ปรับตำแหน่งให้วงกลมซ้อนอยู่กลางสี่เหลี่ยม
-                                      child: Container(
-                                        width: 30.w,
-                                        height: 30.h,
-                                        decoration: BoxDecoration(
-                                          color: date.day == today.day
-                                              ? Colors.green[400]
-                                              : Colors.transparent,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "${date.day}",
-                                          style: TextStyle(
-                                            fontSize: 18.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding:
+                  //       EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                  //   decoration: BoxDecoration(color: Color(0xFF5E7F60)),
+                  //   height: 120.h,
+                  // ),
                   Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFF6EBD9),
