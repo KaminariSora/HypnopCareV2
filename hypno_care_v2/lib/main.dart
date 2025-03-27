@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hypno_care_v2/const.dart';
 import 'page3_healthdiet.dart';
 import 'page2_bmi.dart';
-import 'page5_chat.dart'; 
+import 'page5_chat.dart';
 import 'testpage.dart';
 import 'package:hypno_care_v2/home.dart';
 
@@ -16,11 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity
-      ),
-      home: const ChatScreen(),
-    );
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Home(),
+          '/BMI': (context) => const Page2Bmi(),
+          '/Healthdiet': (context) => const Page3Healthdiet(),
+          '/Chat': (context) => const ChatScreen(),
+        },
+        theme: ThemeData(
+            primarySwatch: Colors.green,
+            visualDensity: VisualDensity.adaptivePlatformDensity));
   }
 }
