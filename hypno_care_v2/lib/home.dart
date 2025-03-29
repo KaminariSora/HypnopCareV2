@@ -130,17 +130,18 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                       margin: EdgeInsets.only(
-                          top: 20.h, bottom: 10.h, left: 20.w, right: 20.w),
-                      height: 165.h,
-                      padding: EdgeInsets.all(20.w),
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Body Mass Index',
                               style: TextStyle(
-                                fontSize: 32.sp,
+                                fontSize: 28.sp,
                                 color: Color(0xFF4F513C),
                               ),
                             ),
@@ -148,7 +149,6 @@ class _HomeState extends State<Home> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -160,7 +160,6 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -168,7 +167,7 @@ class _HomeState extends State<Home> {
                                     '23.8',
                                     style: TextStyle(
                                       color: Color(0xFF4F513C),
-                                      fontSize: 64.sp,
+                                      fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -182,7 +181,7 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/Healthdiet');
+                      Navigator.pushNamed(context, '/BMI');
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -197,18 +196,19 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.h, horizontal: 20.w),
-                      height: 165.h,
-                      padding: EdgeInsets.all(20.w),
+                      margin: EdgeInsets.only(
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Health Diet',
                               style: TextStyle(
-                                fontSize: 32.sp,
+                                fontSize: 28.sp,
                                 color: Color(0xFF4F513C),
                               ),
                             ),
@@ -216,7 +216,6 @@ class _HomeState extends State<Home> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -228,7 +227,6 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -236,7 +234,7 @@ class _HomeState extends State<Home> {
                                     '23.8',
                                     style: TextStyle(
                                       color: Color(0xFF4F513C),
-                                      fontSize: 64.sp,
+                                      fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -250,7 +248,7 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/Healthdiet');
+                      Navigator.pushNamed(context, '/BMI');
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -265,11 +263,12 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.h, horizontal: 20.w),
-                      height: 165.h,
-                      padding: EdgeInsets.all(20.w),
+                      margin: EdgeInsets.only(
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
@@ -284,7 +283,6 @@ class _HomeState extends State<Home> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -296,7 +294,6 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10.w),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.center,
@@ -304,7 +301,7 @@ class _HomeState extends State<Home> {
                                     '23.8',
                                     style: TextStyle(
                                       color: Color(0xFF4F513C),
-                                      fontSize: 64.sp,
+                                      fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
