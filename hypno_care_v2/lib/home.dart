@@ -112,199 +112,205 @@ class _HomeState extends State<Home> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Container(
-                  //   padding:
-                  //       EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-                  //   decoration: BoxDecoration(color: Color(0xFF5E7F60)),
-                  //   height: 120.h,
-                  // ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                          offset: Offset(4.w, 4.h),
-                        ),
-                      ],
-                    ),
-                    margin: EdgeInsets.only(
-                        top: 20.h, bottom: 10.h, left: 20.w, right: 20.w),
-                    height: 200.h,
-                    padding: EdgeInsets.all(20.w),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Body Mass Index',
-                            style: TextStyle(
-                              fontSize: 32.sp,
-                              color: Color(0xFF4F513C),
-                            ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/BMI');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF6EBD9),
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            offset: Offset(4.w, 4.h),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Normal',
-                                  style: TextStyle(
-                                      color: Color(0xFF5E7F60),
-                                      fontSize: 24.sp),
-                                ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Body Mass Index',
+                              style: TextStyle(
+                                fontSize: 28.sp,
+                                color: Color(0xFF4F513C),
                               ),
                             ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '23.8',
-                                  style: TextStyle(
-                                    color: Color(0xFF4F513C),
-                                    fontSize: 64.sp,
-                                    fontWeight: FontWeight.bold,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Normal',
+                                    style: TextStyle(
+                                        color: Color(0xFF5E7F60),
+                                        fontSize: 24.sp),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '23.8',
+                                    style: TextStyle(
+                                      color: Color(0xFF4F513C),
+                                      fontSize: 42.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                          offset: Offset(4.w, 4.h),
-                        ),
-                      ],
-                    ),
-                    margin:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-                    height: 200.h,
-                    padding: EdgeInsets.all(20.w),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Health Diet',
-                            style: TextStyle(
-                              fontSize: 32.sp,
-                              color: Color(0xFF4F513C),
-                            ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/BMI');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF6EBD9),
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            offset: Offset(4.w, 4.h),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Normal',
-                                  style: TextStyle(
-                                      color: Color(0xFF5E7F60),
-                                      fontSize: 24.sp),
-                                ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Health Diet',
+                              style: TextStyle(
+                                fontSize: 28.sp,
+                                color: Color(0xFF4F513C),
                               ),
                             ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '23.8',
-                                  style: TextStyle(
-                                    color: Color(0xFF4F513C),
-                                    fontSize: 64.sp,
-                                    fontWeight: FontWeight.bold,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Normal',
+                                    style: TextStyle(
+                                        color: Color(0xFF5E7F60),
+                                        fontSize: 24.sp),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '23.8',
+                                    style: TextStyle(
+                                      color: Color(0xFF4F513C),
+                                      fontSize: 42.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                          offset: Offset(4.w, 4.h),
-                        ),
-                      ],
-                    ),
-                    margin:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-                    height: 200.h,
-                    padding: EdgeInsets.all(20.w),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Sodium',
-                            style: TextStyle(
-                              fontSize: 28.sp,
-                              color: Color(0xFF4F513C),
-                            ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/BMI');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF6EBD9),
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            offset: Offset(4.w, 4.h),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Normal',
-                                  style: TextStyle(
-                                      color: Color(0xFF5E7F60),
-                                      fontSize: 24.sp),
-                                ),
+                        ],
+                      ),
+                      margin: EdgeInsets.only(
+                          top: 10.h, bottom: 5.h, left: 20.w, right: 20.w),
+                      height: 130.h,
+                      padding: EdgeInsets.fromLTRB(20.w, 20.w, 20.w, 10.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Sodium',
+                              style: TextStyle(
+                                fontSize: 28.sp,
+                                color: Color(0xFF4F513C),
                               ),
                             ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '23.8',
-                                  style: TextStyle(
-                                    color: Color(0xFF4F513C),
-                                    fontSize: 64.sp,
-                                    fontWeight: FontWeight.bold,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Normal',
+                                    style: TextStyle(
+                                        color: Color(0xFF5E7F60),
+                                        fontSize: 24.sp),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '23.8',
+                                    style: TextStyle(
+                                      color: Color(0xFF4F513C),
+                                      fontSize: 42.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
