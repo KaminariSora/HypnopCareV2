@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/BMI');
+                      Navigator.pushNamed(context, '/Healthdiet');
                     },
                     child: Container(
                       decoration: BoxDecoration(
