@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hypno_care_v2/const.dart';
 import 'page3_healthdiet.dart';
 import 'page2_bmi.dart';
 import 'page5_chat.dart';
-import 'testpage.dart';
 import 'package:hypno_care_v2/home.dart';
 
 void main() {

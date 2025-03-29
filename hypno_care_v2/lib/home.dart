@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +16,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: Size(360, 690), // ปรับขนาดตามดีไซน์
+        designSize: const Size(360, 690), // ปรับขนาดตามดีไซน์
         minTextAdapt: true, // ✅ ป้องกันปัญหา LateInitializationError
         splitScreenMode: true,
         builder: (context, child) {
@@ -35,7 +37,7 @@ class _HomeState extends State<Home> {
                 flexibleSpace: Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-                  decoration: BoxDecoration(color: Color(0xFF5E7F60)),
+                  decoration: const BoxDecoration(color: Color(0xFF5E7F60)),
                   child: Column(
                     mainAxisAlignment:
                         MainAxisAlignment.end, // จัดให้แสดงด้านล่าง
@@ -118,7 +120,7 @@ class _HomeState extends State<Home> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF6EBD9),
+                        color: const Color(0xFFF6EBD9),
                         borderRadius: BorderRadius.circular(20.r),
                         boxShadow: [
                           BoxShadow(
@@ -142,7 +144,7 @@ class _HomeState extends State<Home> {
                               'Body Mass Index',
                               style: TextStyle(
                                 fontSize: 28.sp,
-                                color: Color(0xFF4F513C),
+                                color: const Color(0xFF4F513C),
                               ),
                             ),
                           ),
@@ -155,7 +157,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     'Normal',
                                     style: TextStyle(
-                                        color: Color(0xFF5E7F60),
+                                        color: const Color(0xFF5E7F60),
                                         fontSize: 24.sp),
                                   ),
                                 ),
@@ -166,7 +168,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     '23.8',
                                     style: TextStyle(
-                                      color: Color(0xFF4F513C),
+                                      color: const Color(0xFF4F513C),
                                       fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -185,7 +187,7 @@ class _HomeState extends State<Home> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF6EBD9),
+                        color: const Color(0xFFF6EBD9),
                         borderRadius: BorderRadius.circular(20.r),
                         boxShadow: [
                           BoxShadow(
@@ -209,7 +211,7 @@ class _HomeState extends State<Home> {
                               'Health Diet',
                               style: TextStyle(
                                 fontSize: 28.sp,
-                                color: Color(0xFF4F513C),
+                                color: const Color(0xFF4F513C),
                               ),
                             ),
                           ),
@@ -222,7 +224,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     'Normal',
                                     style: TextStyle(
-                                        color: Color(0xFF5E7F60),
+                                        color: const Color(0xFF5E7F60),
                                         fontSize: 24.sp),
                                   ),
                                 ),
@@ -233,7 +235,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     '23.8',
                                     style: TextStyle(
-                                      color: Color(0xFF4F513C),
+                                      color: const Color(0xFF4F513C),
                                       fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -252,7 +254,7 @@ class _HomeState extends State<Home> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF6EBD9),
+                        color: const Color(0xFFF6EBD9),
                         borderRadius: BorderRadius.circular(20.r),
                         boxShadow: [
                           BoxShadow(
@@ -276,7 +278,7 @@ class _HomeState extends State<Home> {
                               'Sodium',
                               style: TextStyle(
                                 fontSize: 28.sp,
-                                color: Color(0xFF4F513C),
+                                color: const Color(0xFF4F513C),
                               ),
                             ),
                           ),
@@ -289,7 +291,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     'Normal',
                                     style: TextStyle(
-                                        color: Color(0xFF5E7F60),
+                                        color: const Color(0xFF5E7F60),
                                         fontSize: 24.sp),
                                   ),
                                 ),
@@ -300,7 +302,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     '23.8',
                                     style: TextStyle(
-                                      color: Color(0xFF4F513C),
+                                      color: const Color(0xFF4F513C),
                                       fontSize: 42.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -317,18 +319,20 @@ class _HomeState extends State<Home> {
               ),
             ),
             bottomNavigationBar: BottomAppBar(
-              color: Color(0xFF5E7F60),
+              color: const Color(0xFF5E7F60),
               shape:
-                  CircularNotchedRectangle(), // Create notch for FloatingActionButton
+                  const CircularNotchedRectangle(), // Create notch for FloatingActionButton
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
                     icon: Icon(Icons.chat_bubble,
                         color: Colors.white, size: 35.sp),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Chat');
+                    },
                   ),
-                  SizedBox(width: 20), // Space for FloatingActionButton
+                  const SizedBox(width: 20), // Space for FloatingActionButton
                   IconButton(
                     icon: Icon(Icons.history, color: Colors.white, size: 40.sp),
                     onPressed: () {},
@@ -338,13 +342,13 @@ class _HomeState extends State<Home> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
-              backgroundColor: Color(0xFFBFBB95),
+              backgroundColor: const Color(0xFFBFBB95),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50), // รูปทรงแบบมน
               ),
               child: Icon(
                 Icons.home,
-                color: Color(0xFF4F513C),
+                color: const Color(0xFF4F513C),
                 size: 45.sp,
               ),
             ),
