@@ -326,7 +326,9 @@ class _HomeState extends State<Home> {
                   IconButton(
                     icon: Icon(Icons.chat_bubble,
                         color: Colors.white, size: 35.sp),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Chat');
+                    },
                   ),
                   SizedBox(width: 20), // Space for FloatingActionButton
                   IconButton(

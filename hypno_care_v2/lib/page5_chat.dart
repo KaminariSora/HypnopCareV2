@@ -21,6 +21,13 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
   }
 
+  var bmi = 22.5;
+  var sex = "Male";
+  var height = 175;
+  var weight = 75;
+  var age = 22;
+  var sodium = 1500;
+
   void _sendMessage() async {
     if (_controller.text.trim().isEmpty) return;
 
@@ -35,44 +42,85 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
 
-    String botReply = await compute(_getBotReply, userMessage);
-
+    // แสดงข้อความเริ่มต้นของ Bot ก่อนรับ Streaming
     setState(() {
       _messages.insert(0, {
-        'text': botReply,
+        'text': "...", // Placeholder ก่อนรับข้อความจริง
         'isUser': false,
         'timestamp': DateTime.now(),
       });
     });
+
+    await _getBotReply(userMessage);
   }
 
-  static Future<String> _getBotReply(String message) async {
+  void _updateBotMessage(String botReply) {
+    if (mounted) {
+      setState(() {
+        if (_messages.isNotEmpty && !_messages.first['isUser']) {
+          _messages.first['text'] = botReply; // อัปเดตข้อความเดิม
+        } else {
+          _messages.insert(0, {
+            'text': botReply,
+            'isUser': false,
+            'timestamp': DateTime.now(),
+          });
+        }
+      });
+    }
+  }
+
+  Future<String> _getBotReply(String message) async {
     try {
-      final response = await http.post(
-        Uri.parse('$apiUrl?key=$geminiAPI'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "contents": [
-            {
-              "role": "user",
-              "parts": [
-                {"text": message}
-              ]
-            }
-          ]
-        }),
+      final request = http.Request(
+        "POST",
+        Uri.parse('$NgrokUrl$ollamaAPI'),
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data["candidates"]?[0]["content"]["parts"][0]["text"] ?? "No response.";
-      } else {
-        return "Error: ${response.statusCode} - ${response.body}";
+      request.headers["Content-Type"] = "application/json";
+      request.body = jsonEncode({
+        "model": "thewindmom/llama3-med42-8b",
+        "prompt": """
+        You are a medical expert specializing in hypertension and nutrition.  
+
+    Analyze the user's health condition based on the following data:  
+    - BMI: $bmi  
+    - Sex: $sex  
+    - Height: $height cm  
+    - Weight: $weight kg  
+    - Age: $age years  
+    - Daily sodium intake: $sodium mg  
+
+    Questions : $message
+
+    Please provide the response in **clear and simple Thai language**, ensuring that it is easy for the user to understand.
+      """,
+        "stream": true, // เปิด Streaming
+        "temperature": 0.3,
+        "top_k": 30,
+        "top_p": 0.8,
+        "num_predict": 300,
+        "stop": []
+      });
+
+      final response = await http.Client().send(request);
+      String botReply = "";
+
+      // อ่าน Stream และรวมข้อความ
+      await for (var chunk in response.stream.transform(utf8.decoder)) {
+        final decodedChunk = jsonDecode(chunk);
+        if (decodedChunk.containsKey("response")) {
+          botReply += decodedChunk["response"];
+          // อัปเดต UI ทันทีเมื่อได้ข้อความใหม่
+          _updateBotMessage(botReply);
+        }
       }
-  } catch (e) {
-    return "Error: $e";
+
+      return botReply;
+    } catch (e) {
+      return "Error: $e";
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
