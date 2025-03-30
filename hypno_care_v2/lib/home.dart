@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
         splitScreenMode: true,
         builder: (context, child) {
           return Scaffold(
+            backgroundColor: const Color(0xFFF2E5D2),
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(120.h), // กำหนดความสูงของ AppBar
               child: AppBar(
@@ -248,7 +249,7 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/BMI');
+                      Navigator.pushNamed(context, '/Sodium');
                     },
                     child: Container(
                       decoration: BoxDecoration(

@@ -74,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final request = http.Request(
         "POST",
-        Uri.parse('$NgrokUrl$ollamaAPI'),
+        Uri.parse('$ngrokUrl$ollamaAPI'),
       );
 
       request.headers["Content-Type"] = "application/json";
