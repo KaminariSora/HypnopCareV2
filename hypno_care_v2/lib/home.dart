@@ -14,21 +14,24 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   DateTime today = DateTime.now();
 
-  String bmi = '';
-  String kuy = '';
+  String bmi = globals.bmi.value;
 
   @override
   void initState() {
     super.initState();
-    kuy = globals.hee;
-    initializeData();
+    globals.bmi.addListener(_updateBmi);
   }
 
-  void initializeData() {
+  void _updateBmi() {
     setState(() {
-      bmi = globals.hee;
-      print(bmi);
+      bmi = globals.bmi.value;
     });
+  }
+
+  @override
+  void dispose() {
+    globals.bmi.removeListener(_updateBmi);
+    super.dispose();
   }
 
   @override

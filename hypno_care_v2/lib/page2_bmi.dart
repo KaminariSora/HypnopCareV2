@@ -120,7 +120,15 @@ class _Page2BmiState extends State<Page2Bmi> {
             bmi = 0.0;
           }
         }
-        globals.hee = bmi.toStringAsFixed(2);
+        try {
+          globals.gender = selectedGender!;
+          globals.age = ageValue.toString();
+          globals.weight = weightValue.toStringAsFixed(0);
+          globals.height = heightValue.toStringAsFixed(0);
+          globals.bmi.value = bmi.toStringAsFixed(2);
+        } catch(e) {
+          print("Error: $e");
+        }
       });
     });
   }
