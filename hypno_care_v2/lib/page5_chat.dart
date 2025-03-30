@@ -54,6 +54,24 @@ class _ChatScreenState extends State<ChatScreen> {
         body: jsonEncode({
           "contents": [
             {
+              "role": "model",
+              "parts": [
+                {
+                  "text": "You are a hypertension (high blood pressure) specialist. "
+                      "Your patient will provide the following details:\n\n"
+                      "BMI: 24.5\n"
+                      "Sex: male\n"
+                      "Height: 175 cm\n"
+                      "Weight: 70 kg\n"
+                      "Age: 25 years\n"
+                      "Sodium intake: 1500 mg\n\n"
+                      "You should remember this information and ONLY respond to questions related to this data. "
+                      "Do NOT provide any other information unless specifically asked by the user. "
+                      "Your response must be concise and clear. "
+                }
+              ]
+            },
+            {
               "role": "user",
               "parts": [
                 {"text": message}
@@ -65,14 +83,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data["candidates"]?[0]["content"]["parts"][0]["text"] ?? "No response.";
+        return data["candidates"]?[0]["content"]["parts"][0]["text"] ??
+            "No response.";
       } else {
         return "Error: ${response.statusCode} - ${response.body}";
       }
-  } catch (e) {
-    return "Error: $e";
+    } catch (e) {
+      return "Error: $e";
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
