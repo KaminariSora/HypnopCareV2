@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'globalVariable.dart' as globals;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +13,23 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   DateTime today = DateTime.now();
+
+  String bmi = '';
+  String kuy = '';
+
+  @override
+  void initState() {
+    super.initState();
+    kuy = globals.hee;
+    initializeData();
+  }
+
+  void initializeData() {
+    setState(() {
+      bmi = globals.hee;
+      print(bmi);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,10 +184,10 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '23.8',
+                                    bmi,
                                     style: TextStyle(
                                       color: const Color(0xFF4F513C),
-                                      fontSize: 42.sp,
+                                      fontSize: 35.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -236,7 +254,7 @@ class _HomeState extends State<Home> {
                                     '23.8',
                                     style: TextStyle(
                                       color: const Color(0xFF4F513C),
-                                      fontSize: 42.sp,
+                                      fontSize: 35.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -303,7 +321,7 @@ class _HomeState extends State<Home> {
                                     '23.8',
                                     style: TextStyle(
                                       color: const Color(0xFF4F513C),
-                                      fontSize: 42.sp,
+                                      fontSize: 35.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

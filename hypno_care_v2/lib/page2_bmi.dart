@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'globalVariable.dart' as globals;
 
 class Page2Bmi extends StatefulWidget {
   const Page2Bmi({super.key});
@@ -54,7 +55,7 @@ class _Page2BmiState extends State<Page2Bmi> {
               emotion = 'assets/blue_face.jpg';
               status = 'Overweight';
               statusColor = Colors.blueAccent;
-            } else if (bmi >= 25){
+            } else if (bmi >= 25) {
               emotion = 'assets/angry_face.jpg';
               status = 'Obese';
               statusColor = Colors.red;
@@ -76,7 +77,7 @@ class _Page2BmiState extends State<Page2Bmi> {
               emotion = 'assets/blue_face.jpg';
               status = 'Overweight';
               statusColor = Colors.blueAccent;
-            } else if (bmi >= 24.5){
+            } else if (bmi >= 24.5) {
               emotion = 'assets/angry_face.jpg';
               status = 'Obese';
               statusColor = Colors.red;
@@ -107,18 +108,19 @@ class _Page2BmiState extends State<Page2Bmi> {
             emotion = 'assets/yellow_face.jpg';
             status = 'Obesity grade 2';
             statusColor = Colors.yellow;
-          } else if (bmi >= 29.9){
+          } else if (bmi >= 29.9) {
             // ท้วม 3
             emotion = 'assets/angry_face.jpg';
             status = 'Obesity grade 3';
             statusColor = Colors.red;
           } else {
-              emotion = 'assets/yellow_face.jpg';
-              status = 'Number only!';
-              statusColor = Colors.black;
-              bmi = 0.0;
+            emotion = 'assets/yellow_face.jpg';
+            status = 'Number only!';
+            statusColor = Colors.black;
+            bmi = 0.0;
           }
         }
+        globals.hee = bmi.toStringAsFixed(2);
       });
     });
   }
