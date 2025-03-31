@@ -15,11 +15,14 @@ class _HomeState extends State<Home> {
   DateTime today = DateTime.now();
 
   String bmi = globals.bmi.value;
+  String bmiStatus = globals.bmiStatus.value;
+  Color statusColor = Colors.transparent;
 
   @override
   void initState() {
     super.initState();
     globals.bmi.addListener(_updateBmi);
+    globals.bmiStatus.addListener(_updateBmiStatus);
   }
 
   void _updateBmi() {
@@ -28,9 +31,34 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _updateBmiStatus() {
+    setState(() {
+      bmiStatus = globals.bmiStatus.value;
+      try {
+        if (bmiStatus == 'Underweight') {
+          statusColor = Colors.purple;
+        } else if (bmiStatus == 'Normal') {
+          statusColor = const Color(0xFF36AE7C);
+        } else if (bmiStatus == 'Obesity grade 1' || bmiStatus == 'Overweight') {
+          statusColor = Colors.blueAccent;
+        } else if (bmiStatus == 'Obesity grade 2') {
+          statusColor = Colors.yellow;
+        } else if (bmiStatus == 'Obesity grade 3' || bmiStatus == 'Obese') {
+          statusColor = Colors.red;
+        } else if(bmiStatus == 'Obese') {
+          statusColor = Colors.red;
+        }
+      } catch (e) {
+        bmiStatus = 'Error!';
+        statusColor = Colors.red;
+      }
+    });
+  }
+
   @override
   void dispose() {
     globals.bmi.removeListener(_updateBmi);
+    globals.bmiStatus.removeListener(_updateBmiStatus);
     super.dispose();
   }
 
@@ -176,9 +204,9 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Normal',
+                                    bmiStatus,
                                     style: TextStyle(
-                                        color: const Color(0xFF5E7F60),
+                                        color: statusColor,
                                         fontSize: 24.sp),
                                   ),
                                 ),

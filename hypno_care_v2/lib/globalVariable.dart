@@ -6,4 +6,5 @@ String age = '';
 String weight = '';
 String height = '';
 ValueNotifier<String> bmi = ValueNotifier<String>('');
+ValueNotifier<String> bmiStatus = ValueNotifier<String>('');
 ValueNotifier<String> sodium = ValueNotifier<String>('');

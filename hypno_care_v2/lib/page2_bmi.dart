@@ -126,6 +126,7 @@ class _Page2BmiState extends State<Page2Bmi> {
           globals.weight = weightValue.toStringAsFixed(0);
           globals.height = heightValue.toStringAsFixed(0);
           globals.bmi.value = bmi.toStringAsFixed(2);
+          globals.bmiStatus.value = status;
         } catch(e) {
           print("Error: $e");
         }
