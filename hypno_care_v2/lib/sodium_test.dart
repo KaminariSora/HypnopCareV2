@@ -77,14 +77,14 @@ class NaaState extends State<Naa> {
   }
 }
 
-class Page4Sodium extends StatefulWidget {
-  const Page4Sodium({Key? key}) : super(key: key);
+class SodiumTrackerApp extends StatefulWidget {
+  const SodiumTrackerApp({Key? key}) : super(key: key);
 
   @override
-  Page4SodiumState createState() => Page4SodiumState();
+  SodiumTrackerAppState createState() => SodiumTrackerAppState();
 }
 
-class Page4SodiumState extends State<Page4Sodium> {
+class SodiumTrackerAppState extends State<SodiumTrackerApp> {
   String searchQuery = '';
   List<FoodItem> availableFoods = [];
   List<FoodItem> selectedFoods = [];
