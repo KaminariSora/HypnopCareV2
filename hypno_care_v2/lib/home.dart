@@ -16,13 +16,16 @@ class _HomeState extends State<Home> {
 
   String bmi = globals.bmi.value;
   String bmiStatus = globals.bmiStatus.value;
-  Color statusColor = Colors.transparent;
+  String healthDiet = globals.healthDiet.value;
+  Color bmiStatusColor = Colors.transparent;
+  Color healthDietStatusColor = Colors.transparent;
 
   @override
   void initState() {
     super.initState();
     globals.bmi.addListener(_updateBmi);
     globals.bmiStatus.addListener(_updateBmiStatus);
+    globals.healthDiet.addListener(_updateHealthDiet);
   }
 
   void _updateBmi() {
@@ -36,22 +39,33 @@ class _HomeState extends State<Home> {
       bmiStatus = globals.bmiStatus.value;
       try {
         if (bmiStatus == 'Underweight') {
-          statusColor = Colors.purple;
+          bmiStatusColor = Colors.purple;
         } else if (bmiStatus == 'Normal') {
-          statusColor = const Color(0xFF36AE7C);
+          bmiStatusColor = const Color(0xFF36AE7C);
         } else if (bmiStatus == 'Obesity grade 1' || bmiStatus == 'Overweight') {
-          statusColor = Colors.blueAccent;
+          bmiStatusColor = Colors.blueAccent;
         } else if (bmiStatus == 'Obesity grade 2') {
-          statusColor = Colors.yellow;
+          bmiStatusColor = Colors.yellow;
         } else if (bmiStatus == 'Obesity grade 3' || bmiStatus == 'Obese') {
-          statusColor = Colors.red;
+          bmiStatusColor = Colors.red;
         } else if(bmiStatus == 'Obese') {
-          statusColor = Colors.red;
+          bmiStatusColor = Colors.red;
         }
       } catch (e) {
         bmiStatus = 'Error!';
-        statusColor = Colors.red;
+        bmiStatusColor = Colors.red;
       }
+    });
+  }
+
+  void _updateHealthDiet() {
+    setState(() {
+      healthDiet = globals.healthDiet.value;
+      if(healthDiet == 'Good') {
+        healthDietStatusColor = const Color(0xFF36AE7C);
+      } else {
+        healthDietStatusColor = Colors.red;
+      }  
     });
   }
 
@@ -59,6 +73,7 @@ class _HomeState extends State<Home> {
   void dispose() {
     globals.bmi.removeListener(_updateBmi);
     globals.bmiStatus.removeListener(_updateBmiStatus);
+    globals.healthDiet.removeListener(_updateHealthDiet);
     super.dispose();
   }
 
@@ -206,7 +221,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     bmiStatus,
                                     style: TextStyle(
-                                        color: statusColor,
+                                        color: bmiStatusColor,
                                         fontSize: 24.sp),
                                   ),
                                 ),
@@ -271,7 +286,7 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Normal',
+                                    '',
                                     style: TextStyle(
                                         color: const Color(0xFF5E7F60),
                                         fontSize: 24.sp),
@@ -282,10 +297,10 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '23.8',
+                                    healthDiet,
                                     style: TextStyle(
-                                      color: const Color(0xFF4F513C),
-                                      fontSize: 35.sp,
+                                      color: healthDietStatusColor,
+                                      fontSize: 32.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

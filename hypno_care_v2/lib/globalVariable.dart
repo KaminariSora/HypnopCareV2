@@ -8,3 +8,4 @@ String height = '';
 ValueNotifier<String> bmi = ValueNotifier<String>('');
 ValueNotifier<String> bmiStatus = ValueNotifier<String>('');
 ValueNotifier<String> sodium = ValueNotifier<String>('');
+ValueNotifier<String> healthDiet = ValueNotifier<String>('');
