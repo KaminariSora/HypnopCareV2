@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'globalVariable.dart' as globals;
 
 class Page2Bmi extends StatefulWidget {
@@ -127,7 +128,7 @@ class _Page2BmiState extends State<Page2Bmi> {
           globals.height = heightValue.toStringAsFixed(0);
           globals.bmi.value = bmi.toStringAsFixed(2);
           globals.bmiStatus.value = status;
-        } catch(e) {
+        } catch (e) {
           print("Error: $e");
         }
       });
@@ -150,296 +151,322 @@ class _Page2BmiState extends State<Page2Bmi> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF2E5D2),
-      appBar: AppBar(
-        title: const Text("BMI Calculate",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFFFFFF),
-            )),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF5E7F60),
-        elevation: 4,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GenderButton(
-                    gender: 'Male',
-                    imagePath: 'assets/male_icon.png',
-                    isSelected: selectedGender == 'Male',
-                    onSelect: selectGender,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GenderButton(
-                    gender: 'Female',
-                    imagePath: 'assets/female_icon.png',
-                    isSelected: selectedGender == 'Female',
-                    onSelect: selectGender,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 365,
-                    height: 166,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6EBD9),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [BoxShadow(blurRadius: 5)],
+    return ScreenUtilInit(
+        designSize: const Size(360, 690), // ปรับขนาดตามดีไซน์
+        minTextAdapt: true, // ✅ ป้องกันปัญหา LateInitializationError
+        splitScreenMode: true,
+        builder: (context, child) {
+          return Scaffold(
+            backgroundColor: const Color(0xFFF2E5D2),
+            appBar: AppBar(
+              title: const Text("BMI Calculate",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFFFFFF),
+                  )),
+              centerTitle: true,
+              backgroundColor: const Color(0xFF5E7F60),
+              elevation: 4,
+            ),
+            body: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
-                    child: Column(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InputBox(
-                          input: SizedBox(
-                            width: 200,
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              controller: _heightController,
-                              decoration: InputDecoration(
-                                hintText: 'Enter height (cm)',
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                filled: true,
-                                fillColor: const Color(0xFFF6EBD9),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide:
-                                      BorderSide.none, // Remove default border
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                      color: Color(0xFF5E7F60), width: 2),
-                                ),
-                                enabledBorder: const UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey, width: 5),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 12),
-                              ),
-                            ),
+                        GenderButton(
+                          gender: 'Male',
+                          imagePath: 'assets/male_icon.png',
+                          isSelected: selectedGender == 'Male',
+                          onSelect: selectGender,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GenderButton(
+                          gender: 'Female',
+                          imagePath: 'assets/female_icon.png',
+                          isSelected: selectedGender == 'Female',
+                          onSelect: selectGender,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 166,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF6EBD9),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [BoxShadow(blurRadius: 5)],
                           ),
-                          label: 'Height (cm)',
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InputBox(
+                                input: SizedBox(
+                                  width: 200,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    controller: _heightController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter height (cm)',
+                                      hintStyle:
+                                          const TextStyle(color: Colors.grey),
+                                      filled: true,
+                                      fillColor: const Color(0xFFF6EBD9),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide
+                                            .none, // Remove default border
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xFF5E7F60), width: 2),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 5),
+                                      ),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 12),
+                                    ),
+                                  ),
+                                ),
+                                label: 'Height (cm)',
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: 166,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF6EBD9),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [BoxShadow(blurRadius: 5)],
+                            ),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return SizedBox(
+                                  height: constraints.maxHeight,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: InputBox(
+                                            input: SizedBox(
+                                              width: 150,
+                                              child: TextField(
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                controller: _weightController,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Enter weight',
+                                                  hintStyle: const TextStyle(
+                                                      color: Colors.grey),
+                                                  filled: true,
+                                                  fillColor:
+                                                      const Color(0xFFF6EBD9),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    borderSide: BorderSide
+                                                        .none, // Remove default border
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Color(
+                                                                0xFF5E7F60),
+                                                            width: 2),
+                                                  ),
+                                                  enabledBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 5),
+                                                  ),
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 12),
+                                                ),
+                                              ),
+                                            ),
+                                            label: 'Weight'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: 166,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF6EBD9),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [BoxShadow(blurRadius: 5)],
+                            ),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return SizedBox(
+                                  height: constraints.maxHeight,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: InputBox(
+                                            input: SizedBox(
+                                              width: 150,
+                                              child: TextField(
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                controller: _ageController,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Enter age',
+                                                  hintStyle: const TextStyle(
+                                                      color: Colors.grey),
+                                                  filled: true,
+                                                  fillColor:
+                                                      const Color(0xFFF6EBD9),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    borderSide: BorderSide
+                                                        .none, // Remove default border
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Color(
+                                                                0xFF5E7F60),
+                                                            width: 2),
+                                                  ),
+                                                  enabledBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 5),
+                                                  ),
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 12),
+                                                ),
+                                              ),
+                                            ),
+                                            label: 'Age'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 57,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF5E7F60)),
+                              onPressed: _getValue,
+                              child: const Text(
+                                'Calculate',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFFFFFFFF)),
+                              )),
                         )
                       ],
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 180,
-                      height: 166,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF6EBD9),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [BoxShadow(blurRadius: 5)],
-                      ),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return SizedBox(
-                            height: constraints.maxHeight,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: InputBox(
-                                      input: SizedBox(
-                                        width: 150,
-                                        child: TextField(
-                                          keyboardType: TextInputType.number,
-                                          controller: _weightController,
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter weight',
-                                            hintStyle: const TextStyle(
-                                                color: Colors.grey),
-                                            filled: true,
-                                            fillColor: const Color(0xFFF6EBD9),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide
-                                                  .none, // Remove default border
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: const BorderSide(
-                                                  color: Color(0xFF5E7F60),
-                                                  width: 2),
-                                            ),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey, width: 5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 12),
-                                          ),
-                                        ),
-                                      ),
-                                      label: 'Weight'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                      width: 180,
-                      height: 166,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF6EBD9),
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [BoxShadow(blurRadius: 5)],
-                      ),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return SizedBox(
-                            height: constraints.maxHeight,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: InputBox(
-                                      input: SizedBox(
-                                        width: 150,
-                                        child: TextField(
-                                          keyboardType: TextInputType.number,
-                                          controller: _ageController,
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter age',
-                                            hintStyle: const TextStyle(
-                                                color: Colors.grey),
-                                            filled: true,
-                                            fillColor: const Color(0xFFF6EBD9),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: BorderSide
-                                                  .none, // Remove default border
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              borderSide: const BorderSide(
-                                                  color: Color(0xFF5E7F60),
-                                                  width: 2),
-                                            ),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey, width: 5),
-                                            ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 12),
-                                          ),
-                                        ),
-                                      ),
-                                      label: 'Age'),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      )),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 365,
-                    height: 57,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF5E7F60)),
-                        onPressed: _getValue,
-                        child: const Text(
-                          'Calculate',
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFFFFFFFF)),
-                        )),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: 365,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 115,
-                      child: Image.asset(
-                        emotion,
-                      ),
-                    ),
                     const SizedBox(
-                      width: 20,
+                      height: 10,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          status,
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: statusColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          bmi.toStringAsFixed(2),
-                          style: const TextStyle(
-                            fontSize: 64,
-                            color: Color(0xFF4F513C),
+                    SizedBox(
+                      width: 365,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 115,
+                            child: Image.asset(
+                              emotion,
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                status,
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: statusColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                bmi.toStringAsFixed(2),
+                                style: const TextStyle(
+                                  fontSize: 64,
+                                  color: Color(0xFF4F513C),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+              ),
+            ),
+          );
+        });
   }
 }
 
@@ -464,7 +491,7 @@ class GenderButton extends StatelessWidget {
         onSelect(gender); // Notify parent about the selection
       },
       child: Container(
-        width: 180,
+        width: MediaQuery.of(context).size.width * 0.45,
         height: 166,
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFBFBB95) : const Color(0xFFF6EBD9),
