@@ -315,7 +315,7 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/BMI');
+                      Navigator.pushNamed(context, '/Sodium');
                     },
                     child: Container(
                       decoration: BoxDecoration(

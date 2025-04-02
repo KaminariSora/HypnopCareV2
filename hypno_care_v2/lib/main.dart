@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hypno_care_v2/const.dart';
+import 'package:hypno_care_v2/page4_sodium.dart';
+import 'package:hypno_care_v2/sodium_test.dart';
 import 'page3_healthdiet.dart';
 import 'page2_bmi.dart';
 import 'page5_chat.dart';
@@ -19,6 +22,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => const Home(),
           '/BMI': (context) => const Page2Bmi(),
           '/Healthdiet': (context) => const Page3Healthdiet(),
+          '/Sodium': (context) => const Page4Sodium(),
           '/Chat': (context) => const ChatScreen(),
         },
         theme: ThemeData(

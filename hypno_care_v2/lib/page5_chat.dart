@@ -21,6 +21,13 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
   }
 
+  var bmi = 22.5;
+  var sex = "Male";
+  var height = 175;
+  var weight = 75;
+  var age = 22;
+  var sodium = 1500;
+
   void _sendMessage() async {
     if (_controller.text.trim().isEmpty) return;
 
@@ -35,18 +42,35 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
 
-    String botReply = await compute(_getBotReply, userMessage);
-
+    // แสดงข้อความเริ่มต้นของ Bot ก่อนรับ Streaming
     setState(() {
       _messages.insert(0, {
-        'text': botReply,
+        'text': "...", // Placeholder ก่อนรับข้อความจริง
         'isUser': false,
         'timestamp': DateTime.now(),
       });
     });
+
+    await _getBotReply(userMessage);
   }
 
-  static Future<String> _getBotReply(String message) async {
+  void _updateBotMessage(String botReply) {
+    if (mounted) {
+      setState(() {
+        if (_messages.isNotEmpty && !_messages.first['isUser']) {
+          _messages.first['text'] = botReply; // อัปเดตข้อความเดิม
+        } else {
+          _messages.insert(0, {
+            'text': botReply,
+            'isUser': false,
+            'timestamp': DateTime.now(),
+          });
+        }
+      });
+    }
+  }
+
+  Future<String> _getBotReply(String message) async {
     try {
       final response = await http.post(
         Uri.parse('$apiUrl?key=$geminiAPI'),
