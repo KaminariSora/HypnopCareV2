@@ -42,13 +42,14 @@ class _HomeState extends State<Home> {
           bmiStatusColor = Colors.purple;
         } else if (bmiStatus == 'Normal') {
           bmiStatusColor = const Color(0xFF36AE7C);
-        } else if (bmiStatus == 'Obesity grade 1' || bmiStatus == 'Overweight') {
+        } else if (bmiStatus == 'Obesity grade 1' ||
+            bmiStatus == 'Overweight') {
           bmiStatusColor = Colors.blueAccent;
         } else if (bmiStatus == 'Obesity grade 2') {
           bmiStatusColor = Colors.yellow;
         } else if (bmiStatus == 'Obesity grade 3' || bmiStatus == 'Obese') {
           bmiStatusColor = Colors.red;
-        } else if(bmiStatus == 'Obese') {
+        } else if (bmiStatus == 'Obese') {
           bmiStatusColor = Colors.red;
         }
       } catch (e) {
@@ -61,11 +62,11 @@ class _HomeState extends State<Home> {
   void _updateHealthDiet() {
     setState(() {
       healthDiet = globals.healthDiet.value;
-      if(healthDiet == 'Good') {
+      if (healthDiet == 'Good') {
         healthDietStatusColor = const Color(0xFF36AE7C);
       } else {
         healthDietStatusColor = Colors.red;
-      }  
+      }
     });
   }
 
@@ -85,6 +86,7 @@ class _HomeState extends State<Home> {
         splitScreenMode: true,
         builder: (context, child) {
           return Scaffold(
+            backgroundColor: const Color(0xFFF2E5D2),
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(120.h), // กำหนดความสูงของ AppBar
               child: AppBar(
@@ -221,8 +223,7 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     bmiStatus,
                                     style: TextStyle(
-                                        color: bmiStatusColor,
-                                        fontSize: 24.sp),
+                                        color: bmiStatusColor, fontSize: 24.sp),
                                   ),
                                 ),
                               ),
@@ -398,7 +399,8 @@ class _HomeState extends State<Home> {
                   ),
                   const SizedBox(width: 20), // Space for FloatingActionButton
                   IconButton(
-                    icon: Icon(Icons.history, color: Colors.white, size: 40.sp),
+                    icon: Icon(Icons.history,
+                        color: Colors.transparent, size: 40.sp),
                     onPressed: () {},
                   ),
                 ],
