@@ -6,6 +6,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'globalVariable.dart' as globals;
 
 class FoodItem {
   final String name;
@@ -136,6 +137,20 @@ class Page4SodiumState extends State<Page4Sodium> {
     await prefs.setStringList('sodiumHistory', history);
   }
 
+  void updateInformation() {
+    double percent = 0;
+    globals.sodium.value = "$totalSodium mg";
+    percent = (totalSodium / 2000);
+    if (percent >= 0.8) {
+      globals.sodiumStatus.value = "High Risk";
+    } else if (percent >= 0.5) {
+      globals.sodiumStatus.value = "Moderate Risk";
+    } else {
+      globals.sodiumStatus.value = "Safe";
+    }
+    print(globals.sodium.value);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<FoodItem> filteredFoods = availableFoods.where((foodItem) {
@@ -246,7 +261,7 @@ class Page4SodiumState extends State<Page4Sodium> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ElevatedButton(
-                    onPressed: confirmSelection,
+                    onPressed: updateInformation,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF5E7F60),
                       padding: EdgeInsets.symmetric(horizontal: 20),

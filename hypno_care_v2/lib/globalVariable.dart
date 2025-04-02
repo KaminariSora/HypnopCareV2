@@ -1,4 +1,5 @@
 library hypno_care_v2.globalVariable;
+
 import 'package:flutter/material.dart';
 
 String gender = '';
@@ -8,4 +9,5 @@ String height = '';
 ValueNotifier<String> bmi = ValueNotifier<String>('');
 ValueNotifier<String> bmiStatus = ValueNotifier<String>('');
 ValueNotifier<String> sodium = ValueNotifier<String>('');
+ValueNotifier<String> sodiumStatus = ValueNotifier<String>('');
 ValueNotifier<String> healthDiet = ValueNotifier<String>('');

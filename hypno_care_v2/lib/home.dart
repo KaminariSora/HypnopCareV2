@@ -17,6 +17,8 @@ class _HomeState extends State<Home> {
   String bmi = globals.bmi.value;
   String bmiStatus = globals.bmiStatus.value;
   String healthDiet = globals.healthDiet.value;
+  String sodium = globals.sodium.value;
+  String sodiumStatus = globals.sodiumStatus.value;
   Color bmiStatusColor = Colors.transparent;
   Color healthDietStatusColor = Colors.transparent;
 
@@ -26,6 +28,7 @@ class _HomeState extends State<Home> {
     globals.bmi.addListener(_updateBmi);
     globals.bmiStatus.addListener(_updateBmiStatus);
     globals.healthDiet.addListener(_updateHealthDiet);
+    globals.sodium.addListener(_updateSodium);
   }
 
   void _updateBmi() {
@@ -70,11 +73,19 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _updateSodium() {
+    setState(() {
+      sodium = globals.sodium.value;
+      sodiumStatus = globals.sodiumStatus.value;
+    });
+  }
+
   @override
   void dispose() {
     globals.bmi.removeListener(_updateBmi);
     globals.bmiStatus.removeListener(_updateBmiStatus);
     globals.healthDiet.removeListener(_updateHealthDiet);
+    globals.sodium.removeListener(_updateSodium);
     super.dispose();
   }
 
@@ -354,7 +365,7 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    'Normal',
+                                    sodiumStatus,
                                     style: TextStyle(
                                         color: const Color(0xFF5E7F60),
                                         fontSize: 24.sp),
@@ -365,7 +376,7 @@ class _HomeState extends State<Home> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '23.8',
+                                    sodium,
                                     style: TextStyle(
                                       color: const Color(0xFF4F513C),
                                       fontSize: 35.sp,
