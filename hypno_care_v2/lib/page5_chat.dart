@@ -72,46 +72,51 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<String> _getBotReply(String message) async {
     try {
-      final response = await http.post(
-        Uri.parse('$apiUrl?key=$geminiAPI'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "contents": [
-            {
-              "role": "model",
-              "parts": [
-                {
-                  "text": "You are a hypertension (high blood pressure) specialist. "
-                      "Your patient will provide the following details:\n\n"
-                      "BMI: 24.5\n"
-                      "Sex: male\n"
-                      "Height: 175 cm\n"
-                      "Weight: 70 kg\n"
-                      "Age: 25 years\n"
-                      "Sodium intake: 1500 mg\n\n"
-                      "You should remember this information and ONLY respond to questions related to this data. "
-                      "Do NOT provide any other information unless specifically asked by the user. "
-                      "Your response must be concise and clear. "
-                }
-              ]
-            },
-            {
-              "role": "user",
-              "parts": [
-                {"text": message}
-              ]
-            }
-          ]
-        }),
+      final request = http.Request(
+        "POST",
+        Uri.parse('$NgrokUrl$ollamaAPI'),
       );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data["candidates"]?[0]["content"]["parts"][0]["text"] ??
-            "No response.";
-      } else {
-        return "Error: ${response.statusCode} - ${response.body}";
+      request.headers["Content-Type"] = "application/json";
+      request.body = jsonEncode({
+        "model": "thewindmom/llama3-med42-8b",
+        "prompt": """
+        You are a medical expert specializing in hypertension and nutrition.  
+
+    Analyze the user's health condition based on the following data:  
+    - BMI: $bmi  
+    - Sex: $sex  
+    - Height: $height cm  
+    - Weight: $weight kg  
+    - Age: $age years  
+    - Daily sodium intake: $sodium mg  
+
+    Questions : $message
+
+    Please provide the response in **clear and simple Thai language**, ensuring that it is easy for the user to understand.
+      """,
+        "stream": true, // เปิด Streaming
+        "temperature": 0.3,
+        "top_k": 30,
+        "top_p": 0.8,
+        "num_predict": 300,
+        "stop": []
+      });
+
+      final response = await http.Client().send(request);
+      String botReply = "";
+
+      // อ่าน Stream และรวมข้อความ
+      await for (var chunk in response.stream.transform(utf8.decoder)) {
+        final decodedChunk = jsonDecode(chunk);
+        if (decodedChunk.containsKey("response")) {
+          botReply += decodedChunk["response"];
+          // อัปเดต UI ทันทีเมื่อได้ข้อความใหม่
+          _updateBotMessage(botReply);
+        }
       }
+
+      return botReply;
     } catch (e) {
       return "Error: $e";
     }
