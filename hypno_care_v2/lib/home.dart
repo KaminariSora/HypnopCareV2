@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
   String healthDiet = globals.healthDiet.value;
   String sodium = globals.sodium.value;
   String sodiumStatus = globals.sodiumStatus.value;
+  Color sodiumStatusColor = Colors.transparent;
   Color bmiStatusColor = Colors.transparent;
   Color healthDietStatusColor = Colors.transparent;
 
@@ -29,6 +30,7 @@ class _HomeState extends State<Home> {
     globals.bmiStatus.addListener(_updateBmiStatus);
     globals.healthDiet.addListener(_updateHealthDiet);
     globals.sodium.addListener(_updateSodium);
+    globals.sodiumStatus.addListener(_updateSodiumStatus);
   }
 
   void _updateBmi() {
@@ -76,7 +78,24 @@ class _HomeState extends State<Home> {
   void _updateSodium() {
     setState(() {
       sodium = globals.sodium.value;
+    });
+  }
+
+  void _updateSodiumStatus() {
+    setState(() {
       sodiumStatus = globals.sodiumStatus.value;
+      try {
+        if (sodiumStatus == 'High Risk') {
+          sodiumStatusColor = Colors.red;
+        } else if (sodiumStatus == 'Moderate Risk') {
+          sodiumStatusColor = const Color.fromARGB(255, 232, 185, 31);
+        } else if (sodiumStatus == 'Safe') {
+          sodiumStatusColor = Colors.green;
+        }
+      } catch (e) {
+        bmiStatus = 'Error!';
+        bmiStatusColor = Colors.red;
+      }
     });
   }
 
@@ -86,6 +105,7 @@ class _HomeState extends State<Home> {
     globals.bmiStatus.removeListener(_updateBmiStatus);
     globals.healthDiet.removeListener(_updateHealthDiet);
     globals.sodium.removeListener(_updateSodium);
+    globals.sodiumStatus.removeListener(_updateSodiumStatus);
     super.dispose();
   }
 
@@ -367,8 +387,8 @@ class _HomeState extends State<Home> {
                                   child: Text(
                                     sodiumStatus,
                                     style: TextStyle(
-                                        color: const Color(0xFF5E7F60),
-                                        fontSize: 24.sp),
+                                        color: sodiumStatusColor,
+                                        fontSize: 20.sp),
                                   ),
                                 ),
                               ),
@@ -379,7 +399,7 @@ class _HomeState extends State<Home> {
                                     sodium,
                                     style: TextStyle(
                                       color: const Color(0xFF4F513C),
-                                      fontSize: 35.sp,
+                                      fontSize: 30.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
