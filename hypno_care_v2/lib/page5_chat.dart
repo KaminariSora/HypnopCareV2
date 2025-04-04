@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hypno_care_v2/const.dart';
-
+import 'globalVariable.dart' as globals;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -16,24 +16,37 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final List<Map<String, dynamic>> _messages = [];
 
+  String bmi = globals.bmi.value;
+  String height = globals.height;
+  String weight = globals.weight;
+  String age = globals.age;
+  String sodium = globals.sodium.value;
+
   @override
   void initState() {
     super.initState();
+    globals.bmi.addListener(_updateBmi);
+    globals.sodium.addListener(_updateSodium);
   }
 
-  var bmi = 22.5;
-  var sex = "Male";
-  var height = 175;
-  var weight = 75;
-  var age = 22;
-  var sodium = 1500;
+  void _updateBmi() {
+    setState(() {
+      bmi = globals.bmi.value;
+    });
+  }
+
+  void _updateSodium() {
+    setState(() {
+      sodium = globals.sodium.value;
+    });
+  }
 
   void _sendMessage() async {
     if (_controller.text.trim().isEmpty) return;
 
     String userMessage = _controller.text;
     _controller.clear();
-
+    String botReply = await compute(_getBotReply, userMessage);
     setState(() {
       _messages.insert(0, {
         'text': userMessage,
@@ -45,29 +58,13 @@ class _ChatScreenState extends State<ChatScreen> {
     // แสดงข้อความเริ่มต้นของ Bot ก่อนรับ Streaming
     setState(() {
       _messages.insert(0, {
-        'text': "...", // Placeholder ก่อนรับข้อความจริง
+        'text': botReply, // Placeholder ก่อนรับข้อความจริง
         'isUser': false,
         'timestamp': DateTime.now(),
       });
     });
 
     await _getBotReply(userMessage);
-  }
-
-  void _updateBotMessage(String botReply) {
-    if (mounted) {
-      setState(() {
-        if (_messages.isNotEmpty && !_messages.first['isUser']) {
-          _messages.first['text'] = botReply; // อัปเดตข้อความเดิม
-        } else {
-          _messages.insert(0, {
-            'text': botReply,
-            'isUser': false,
-            'timestamp': DateTime.now(),
-          });
-        }
-      });
-    }
   }
 
   Future<String> _getBotReply(String message) async {
@@ -83,12 +80,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 {
                   "text": "You are a hypertension (high blood pressure) specialist. "
                       "Your patient will provide the following details:\n\n"
-                      "BMI: 24.5\n"
-                      "Sex: male\n"
-                      "Height: 175 cm\n"
-                      "Weight: 70 kg\n"
-                      "Age: 25 years\n"
-                      "Sodium intake: 1500 mg\n\n"
+                      "BMI: 10\n"
+                      "Height: 140 cm\n"
+                      "Weight: 60 kg\n"
+                      "Age: 50 years\n"
+                      "Sodium intake: 50 mg\n\n"
                       "You should remember this information and ONLY respond to questions related to this data. "
                       "Do NOT provide any other information unless specifically asked by the user. "
                       "Your response must be concise and clear. "
