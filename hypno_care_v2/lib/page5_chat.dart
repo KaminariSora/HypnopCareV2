@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hypno_care_v2/const.dart';
-import 'globalVariable.dart' as globals;
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:hypno_care_v2/globalVariable.dart' as globals;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -46,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     String userMessage = _controller.text;
     _controller.clear();
-    String botReply = await compute(_getBotReply, userMessage);
+
     setState(() {
       _messages.insert(0, {
         'text': userMessage,
@@ -55,16 +56,15 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
 
-    // แสดงข้อความเริ่มต้นของ Bot ก่อนรับ Streaming
+    String botReply = await compute(_getBotReply, userMessage);
+
     setState(() {
       _messages.insert(0, {
-        'text': botReply, // Placeholder ก่อนรับข้อความจริง
+        'text': botReply,
         'isUser': false,
         'timestamp': DateTime.now(),
       });
     });
-
-    await _getBotReply(userMessage);
   }
 
   Future<String> _getBotReply(String message) async {
@@ -80,11 +80,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 {
                   "text": "You are a hypertension (high blood pressure) specialist. "
                       "Your patient will provide the following details:\n\n"
-                      "BMI: 10\n"
-                      "Height: 140 cm\n"
-                      "Weight: 60 kg\n"
-                      "Age: 50 years\n"
-                      "Sodium intake: 50 mg\n\n"
+                      "BMI: $bmi\n"
+                      "Height: $height cm\n"
+                      "Weight: $weight kg\n"
+                      "Age: $age years\n"
+                      "Sodium intake: $sodium mg\n\n"
                       "You should remember this information and ONLY respond to questions related to this data. "
                       "Do NOT provide any other information unless specifically asked by the user. "
                       "Your response must be concise and clear. "
