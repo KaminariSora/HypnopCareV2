@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hypno_care_v2/const.dart';
+import 'globalVariable.dart' as globals;
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -21,12 +22,12 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
   }
 
-  var bmi = 22.5;
-  var sex = "Male";
-  var height = 175;
-  var weight = 75;
-  var age = 22;
-  var sodium = 1500;
+  String bmi = globals.bmi.value;
+  String sex = globals.gender;
+  String height = globals.height;
+  String weight = globals.weight;
+  String age = globals.age;
+  String sodium = globals.sodium.value;
 
   void _sendMessage() async {
     if (_controller.text.trim().isEmpty) return;
@@ -99,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "temperature": 0.3,
         "top_k": 30,
         "top_p": 0.8,
-        "num_predict": 300,
+        "num_predict": 200,
         "stop": []
       });
 
