@@ -31,12 +31,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _updateBmi() {
+    if (!mounted) return;
     setState(() {
       bmi = globals.bmi.value;
     });
   }
 
   void _updateSodium() {
+    if (!mounted) return;
     setState(() {
       sodium = globals.sodium.value;
     });
