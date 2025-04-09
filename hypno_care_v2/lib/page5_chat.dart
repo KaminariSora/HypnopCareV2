@@ -56,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
 
-    String botReply = await compute(_getBotReply, userMessage);
+    String botReply = await _getBotReply(userMessage);
 
     setState(() {
       _messages.insert(0, {
